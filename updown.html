@@ -1,0 +1,33 @@
+<div class="updown-pages"><div class="uppages">
+  <h2>Entry Pages {{data.entryPages.pvAll}}</h2>
+  <div class="entries">
+    <div class="item" ng-repeat="item in data.entryPages">
+      <span class="title">{{item.name}}</span>
+      <span class="pv">{{item.pv}}</span>
+      <span class="rate">{{ (item.pv / data.entryPages.pvAll * 100).toFixed(2)}}%</span>
+    </div>
+  </div>
+</div>
+<div class="mainpath">
+  <div class="step" ng-repeat="item in data.convertionRate">
+
+    <div class="content">
+      <div class="title">Step{{$index+1}}</div>
+      <div class="pv">{{item.pv}} Visitors</div>
+      <div class="url">{{item.name}}</div>
+    </div>
+
+    <div class="exits">
+      <div class="allout">{{data.exitPages[$index].allOutPv}}</div>
+      <div class="exit" ng-repeat="exit in data.exitPages[$index]">
+        <div class="name">{{exit.name}}</div>
+        <div class="out_pv">{{exit.out_pv}}</div>
+      </div>
+    </div>
+
+    <div class="ratio" ng-show="data.convertionRate[$index+1]">
+      <div class="pv">{{data.convertionRate[$index+1].pv}}</div>
+      <div class="pv">{{(data.convertionRate[$index+1].pv / item.pv * 100).toFixed(2)}}%</div>
+    </div>
+  </div>
+</div></div>

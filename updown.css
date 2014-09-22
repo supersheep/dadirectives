@@ -1,0 +1,42 @@
+.updown-pages{
+  position: relative;
+  width: 600px;
+}
+
+.updown-pages .uppages{
+  position: absolute;
+}
+
+
+.updown-pages .mainpath{
+  position: absolute;
+  left: 250px;
+}
+
+.updown-pages .mainpath .step{
+  position: relative;
+}
+.updown-pages .mainpath .step .content{
+  background-color: #123;
+  color: #fff;
+  padding: 30px;
+  height: 150px;
+}
+
+.updown-pages .mainpath .step .ratio{
+  text-align: center;
+  background-color: #ef0;
+}
+
+.updown-pages .mainpath .step .exits{
+  position: absolute;
+  right: -220px;
+  width: 200px;
+  top: 0;
+}
+
+.updown-pages .downpages{
+  position: absolute;
+  left: 400px;
+}
+

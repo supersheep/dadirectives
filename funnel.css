@@ -1,0 +1,53 @@
+.funnel{
+  font-family: sans-serif;
+}
+
+.funnel .headers{
+  margin-bottom: 10px;
+}
+
+.funnel .headers:after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.funnel .headers .item{
+  float: left;
+  margin-right: 10px
+}
+
+
+.funnel .headers .label,
+.funnel .headers .value{
+  float: left;
+}
+
+.funnel .step{
+  position: relative;
+  background-color: #f5f3f6;
+  width: 230px;
+  border: 1px solid #361461;
+  padding: 15px;
+  margin-bottom: 40px;
+}
+
+.step .name{
+  font-size: 24px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  color: #2c1d54;
+  text-align: center;
+}
+.step .pv{
+  text-align: center
+}
+
+.funnel .step .ratio{
+  position: absolute;
+  bottom: -40px;
+  z-index: 9;
+  text-align: center;
+  width: 230px;
+}
