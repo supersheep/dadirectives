@@ -11,14 +11,14 @@
   <div class="step" ng-repeat="item in data.nodes">
     <div class="content">
       <div class="name">{{item.name}}</div>
-      <div class="pv">{{item.pv}} PV</div>
-      <div class="pv">{{item.pv}} UV</div>
+      <div class="pv"><strong>{{item.pv}}</strong> Visitors (pv)</div>
+      <div class="uv"><strong>{{item.pv}}</strong> Unique Visitors (uv)</div>
       <div class="url">{{item.url}}</div>
     </div>
 
     <div class="ratio" ng-show="data.nodes[$index+1]">
-      <div class="pv">{{data.nodes[$index+1][data.ratekey]}}</div>
-      <div class="pv">{{(data.nodes[$index+1][data.ratekey] / item[data.ratekey] * 100).toFixed(2)}}%</div>
+      <div class="text">{{data.nodes[$index+1][data.ratekey]}}</div>
+      <div class="text">{{(data.nodes[$index+1][data.ratekey] / item[data.ratekey] * 100).toFixed(2)}}%</div>
     </div>
   </div>
 </div>
