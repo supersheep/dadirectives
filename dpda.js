@@ -54,10 +54,7 @@
         }
 
         function updateSelected(){
-          var currentFilters = Object.keys(currentChoosen).map(function(k){
-            return currentChoosen[k];
-          });
-          scope.itemSelected({$filters:currentFilters});
+          scope.itemSelected({$filters:currentChoosen});
         }
 
         scope.getChildrenClass = function(item, rowName){
