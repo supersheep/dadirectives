@@ -23,7 +23,19 @@
         currentFilters: "=current",
         itemSelected: "&"
       },
-      templateUrl: "templates/filter.html",
+      template: '<div class="header-filter">'
+        +'<div class="row" ng-repeat="row in data">'
+        +'          <div class="label">{{row.name}}：</div>'
+        +'          <div class="items" ng-repeat="item in row.children">'
+        +'            <div ng-class="getItemClass(item,row.name)" ng-click="clickItem(item,row.name)" data-key="{{item.key}}">{{item.name}}</div>'
+        +'          </div>'
+        +'          <div class="children-container">'
+        +'            <div ng-class="getChildrenClass(item, row.name)"  ng-repeat="item in row.children">'
+        +'              <div ng-class="getChildItemClass(child, row.name)" ng-click="clickChild(child, row.name)" ng-repeat="child in item.children">{{child.name}}</div>'
+        +'            </div>'
+        +'          </div>'
+        +'        </div>'
+        +'        </div>',
       link: function(scope, element, attr){
 
         var currentChoosen = {};
