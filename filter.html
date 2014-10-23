@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="updown.css">
+  <link rel="stylesheet" href="funnel.css">
+  <link rel="stylesheet" href="filter.css">
+  <script src="angular.min.js"></script>
+</head>
+<body>
+
+  <div ng-controller="MyCtrl">
+    <!-- <div dpda-funnel data="funnel" style="margin:0 auto;width:300px"></div> -->
+    <div dpda-filter data="filter" current="currentFilters" item-selected="itemSelected($filters)" style="margin:0 auto;width:870px"></div>
+  </div>
+  <script src="dpda.js"></script>
+  <script>
+  var app = angular.module('app',['dpda']);
+
+  app.controller('MyCtrl',function($scope){
+    $scope.currentFilters = [
+      "all",
+      "seo2"
+    ];
+
+    $scope.itemSelected = function($filters){
+      console.log($filters);
+    }
+
+    $scope.filter = [{
+      name:"城市",
+      children:[{
+        name:"全国",
+        key:"all"
+      },{
+        name:"shanghai",
+        key:"shanghai"
+      },{
+        name:"beijing",
+        key:"beijing"
+      }]
+    },{
+      name:"站外引流",
+      children:[{
+        name:"SEO",
+        children:[{
+          name:"seo1",
+          key:"seo1"
+        },{
+          name:"seo2",
+          key:"seo2"
+        }]
+      },{
+        name:"SEM",
+        key:"sem",
+        children:[{
+          name:"baidubranding",
+          key:"baidubranding"
+        },{
+          name:"baiduss",
+          key:"baiduss"
+        },{
+          name:"360ss",
+          key:"360ss"
+        }]
+      }]
+    }];
+
+
+
+    $scope.funnel = {
+      name: "标题",
+      headers: [{
+        label: "Rate",
+        value: "20%"
+      },{
+        label: "支付率",
+        value: "12%"
+      }],
+      ratekey: "pv",
+      nodes: [{
+        url: "http://www.dianping.com",
+        name: "首页",
+        pv:"22010",
+        mv:"123123"
+      },{
+        url: "http://www.dianping.com/search",
+        name: "搜索页",
+        pv:"4784",
+        mv:"1718"
+      },{
+        url: "http://www.dianping.com/shop/12312",
+        name: "商户页",
+        pv:"1718",
+        mv:"1718"
+      }]
+    };
+
+    $scope.data = {
+      entryPages: [{
+        "name": "Direct entry",
+        "pv": 11913
+      },{
+        "name": "http://www.google.com",
+        "pv": 1342
+      },{
+        "name":"All other",
+        "pv":7843
+      }],
+      convertionRate: [{
+        name:"http://www.dianping.com",
+        pv:"22010"
+      },{
+        name:"http://www.dianping.com/shanghai",
+        pv:"4784"
+      },{
+        name:"http://www.dianping.com/shop/123",
+        pv:"1718"
+      }],
+      exitPages: [
+        [{
+          name:"left site",
+          out_pv:"14832"
+        },{
+          name:"http://a",
+          out_pv:"329"
+        },{
+          name:"http://b",
+          out_pv:"259"
+        },{
+          name:"http://c",
+          out_pv:"252"
+        },{
+          name:"All other",
+          out_pv:1554
+        }],
+        [{
+          name:"Left site",
+          out_pv:"2102"
+        },{
+          name:"http://d",
+          out_pv:"177"
+        },{
+          name:"http://e",
+          out_pv:"133"
+        }],
+        [{
+          name:"Left site",
+          out_pv:"1622"
+        },{
+          name:"http://d",
+          out_pv:"28"
+        },{
+          name:"http://e",
+          out_pv:"28"
+        }]
+      ]
+    };
+  });
+
+  angular.bootstrap(document.body, ['app']);
+
+  </script>
+</body>
+</html>
