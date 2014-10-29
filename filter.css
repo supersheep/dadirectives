@@ -1,11 +1,14 @@
 .header-filter{
 	color: #333;
-	background-color: #f2f2f2;
-	padding: 15px 20px 20px 20px;
+	background-color: #fff;
+	border: 1px solid #eaeaea;
 }
 
 .header-filter .row{
+	padding: 15px 0;
+	margin: 0 15px;
 	position: relative;
+	border-bottom: 1px solid #eaeaea
 }
 
 .header-filter .row:after{
@@ -16,14 +19,14 @@
 
 .header-filter .row .label{
 	position: absolute;
-	left: 0;
-	top: 0;
+	top: 15px;
 	left: 10px;
 	font-size: 14px;
-	width: 100px;
+	width: 75px;
 	text-align: right;
 	padding-right: 10px;
 	line-height: 30px;
+	border-right: 1px solid #eaeaea;
 }
 
 .header-filter .row .items-container{
@@ -33,35 +36,62 @@
 .header-filter .row .items{
 	float: left;
 }
-
+/*
 
 .header-filter .row .more{
 	float: left;
 	cursor: pointer;
+	font-size: 12px;
+	height: 20px;
+	padding: 6px 0 5px 0;
 	margin-left: 10px;
-	line-height: 30px
-}
+	line-height: 20px
+}*/
 
 .header-filter .row .items .name,
 .header-filter .row .child-item,
-.header-filter .row .third-item{
+.header-filter .row .third-item,
+.header-filter .row .more{
 	float: left;
-	font-size: 14px;
-	text-align: center;
-	min-width: 60px;
 	margin-right: 3px;
-	margin-bottom: 13px;
+	min-width: 100px;
+	padding: 6px 0 5px 20px;
+
+}
+
+.header-filter .row .items .name span,
+.header-filter .row .child-item span,
+.header-filter .row .third-item span,
+.header-filter .row .more span{
+	text-align: center;
 	cursor: pointer;
-	padding: 8px 15px;
-	background-color: #ccc;
+	height: 20px;
+	color: #333;
+	line-height: 20px;
+	font-size: 12px;
+	padding: 4px 8px;
+
 }
 
 
-.header-filter .row .items .name.active,
-.header-filter .row .child-item.active,
-.header-filter .row .third-item-container .third-item.active{
+.header-filter .row .items .name.active span,
+.header-filter .row .child-item.active span,
+.header-filter .row .third-item-container .third-item.active span{
 	background-color: #39c;
 	color: #fff;
+}
+
+.header-filter .row .items .name.haschild.active{
+	background-color: #f7f7f7
+}
+
+.header-filter .row .items .name.haschild.active span{
+	background-color: transparent;
+	color: #333;
+}
+
+.header-filter .row .child-wrapper:last-child .third-item-container{
+	border-bottom: 0;
 }
 
 .header-filter .row .child-item.has-third-item{
@@ -76,10 +106,26 @@
 	clear: both;
 }
 
+
 .header-filter .row .third-item-container .title{
 	float: left;
-	line-height: 30px;
+	font-size: 14px;
+	line-height: 20px;
+	height: 20px;
+	padding: 5px 0 5px 10px;
 	margin-right: 10px;
+	color: #999;
+}
+
+.header-filter .row .third-item-container{
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 13px;
+	padding-top: 13px
+}
+
+
+.header-filter .row .third-item-container:after{
+
 }
 
 .header-filter .row .third-item-container .third-item{
@@ -91,11 +137,11 @@
 }
 
 .header-filter .row .children-container .children{
-	background-color: #e4e4e4;
-	border: 1px solid #d7d7d7;
-	padding: 13px 12px 0 13px;
+	background-color: #f7f7f7;
+	padding: 0 12px 0 13px;
 	display: none;
 }
+
 
 .header-filter .children-container .children:after{
 	content: "";
@@ -104,7 +150,7 @@
 }
 
 .header-filter .children-container .children .child-item{
-
+	padding: 12px;
 }
 
 .header-filter .row .children-container .children.active{

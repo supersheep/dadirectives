@@ -29,20 +29,18 @@
       +'  <div class="label">{{row.name}}：</div>'
       +'  <div class="items-container">'
       +'    <div class="items" ng-show="$index < max || row.showMore" ng-repeat="item in row.children">'
-      +'      <div ng-class="getItemClass(item,row.name)" ng-click="clickItem(item,row.name)" data-key="{{item.key}}">{{item.name}}</div>'
+      +'      <div ng-class="getItemClass(item,row)" ng-click="clickItem(item,row)" data-key="{{item.key}}"><span>{{item.name}}</span></div>'
       +'    </div>'
-      +'    <div class="more" ng-show="row.children.length > max && !row.showMore" ng-click="row.showMore=true">更多</div>'
+      +'    <div class="more" ng-show="row.children.length > max" ng-click="row.showMore=!row.showMore"><span>{{row.showMore?"收起":"更多"}}</span></div>'
       +'    <div class="children-container">'
-      +'      <div ng-class="getChildrenClass(item, row.name)" ng-repeat="item in row.children">'
-      +'        <div ng-repeat="child in item.children">'
+      +'      <div ng-class="getChildrenClass(item, row)" ng-repeat="item in row.children">'
+      +'        <div ng-repeat="child in item.children" class="child-wrapper">'
       +'          <div ng-switch="!!(child.children && child.children.length)">'
       +'            <div ng-switch-when="true" class="third-item-container">'
       +'              <div class="title">{{child.name}}：</div>'
-      +'              <div ng-class="getThirdItem(thirdItem, row.name)" ng-repeat="thirdItem in child.children" ng-click="clickChild(thirdItem, row.name)">{{thirdItem.name}}</div>'
+      +'              <div ng-class="getThirdItem(thirdItem, row)" ng-repeat="thirdItem in child.children" ng-click="clickChild(thirdItem, row)"><span>{{thirdItem.name}}</span></div>'
       +'            </div>'
-      +'            <div ng-class="getChildItemClass(child, row.name)" ng-switch-when="false" ng-click="clickChild(child, row.name)">'
-      +'              {{child.name}}'
-      +'            </div>'
+      +'            <div ng-class="getChildItemClass(child, row)" ng-switch-when="false" ng-click="clickChild(child, row)"><span>{{child.name}}</span></div>'
       +'          </div>'
       +'        </div>'
       +'      </div>'
@@ -54,86 +52,87 @@
         var currentChoosen = {};
         var currentOpen = {};
 
-        function shouldOpen(item, rowName, type){
+        function shouldOpen(item, row, type){
           var result = false;
-            
-
           if(item.children){
             result = item.children.some(function(c){
-              if(item.initialized){
-                return item.open
+              if(row.initialized){
+                return item.open;
               }else{
-                return item.open || shouldOpen(c, rowName);
+                return item.open || shouldOpen(c, row);
               }
             }, 'item');
           }else{
-            if(scope.currentFilters.indexOf(item.key) > -1){
+            if(scope.currentFilters[row.name] == item.key){
               result = true;
             }
           } 
 
           if(result == true){
             if(type == "item"){
-              currentOpen[rowName] = item; 
+              currentOpen[row.name] = item; 
             }
 
             if(!item.children){
-              currentChoosen[rowName] = item.key;
+              currentChoosen[row.name] = item.key;
             }
 
-          }
-
-          if(item.name == "SEO"){
-            console.log(item,rowName);
-            console.log("result", result);
           }
 
           return result;
         }
 
+
+
+
         function updateSelected(){
           scope.itemSelected({$filters:currentChoosen});
         }
 
-        scope.getThirdItem = function(item,rowName){
+        scope.getThirdItem = function(item,row){
           var classes = ["third-item"];
-          if(shouldOpen(item, rowName)){
+          if(shouldOpen(item, row)){
             classes.push("active");
           }
           return classes;
         }
 
-        scope.getChildrenClass = function(item, rowName){
+        scope.getChildrenClass = function(item, row){
           var classes = ["children"];
-          if(shouldOpen(item, rowName) && item.children && item.children.length){
+          if(shouldOpen(item, row) && item.children && item.children.length){
             classes.push("active");
           }
 
           // 初始化过之后不走该逻辑
-          if(!item.initialized){
+          if(!row.initialized){
             if(item.children && item.children.some(function(child){
-              return shouldOpen(child,rowName);
+              return shouldOpen(child,row);
             })){
               item.open = true;
-              item.initialized = true;
-              currentOpen[rowName] = item;
+              row.initialized = true;
+              currentOpen[row] = item;
             }
           }
 
           return classes;
         };
 
-        scope.getItemClass = function(item, rowName){
+        scope.getItemClass = function(item, row){
           var classes = ["name"];
-          if(shouldOpen(item, rowName, 'item')){
+          if(shouldOpen(item, row, 'item')){
             classes.push("active");
           }
+
+          if(item.children && item.children.length){
+            classes.push("haschild");
+          }
+
           return classes;
         }
 
-        scope.getChildItemClass = function(item, rowName){
+        scope.getChildItemClass = function(item, row){
           var classes = ["child-item"];
-          if(shouldOpen(item, rowName, 'child')){
+          if(shouldOpen(item, row, 'child')){
             classes.push("active");
           }
           
@@ -144,36 +143,25 @@
           return classes;
         }
 
-        scope.clickItem = function(item, rowName){
-          var current = currentOpen[rowName];
+        scope.clickItem = function(item, row){
+          var current = currentOpen[row.name];
           if(current){
             if(current.children){
               current.open = false;
-            }else{
-              var indexOfKey = scope.currentFilters.indexOf(current.key);
-              if(indexOfKey > -1){
-                scope.currentFilters.splice(indexOfKey,1);
-              }
             }
           };
-          currentOpen[rowName] = item;
+          currentOpen[row.name] = item;
           if(item.children){
             item.open = true;
           }else{
-            currentChoosen[rowName] = item.key;
-            scope.currentFilters.push(item.key);
+            scope.currentFilters[row.name] = item.key;
             updateSelected();
           }
         }
 
-        scope.clickChild = function(item, rowName){
-          var currentKey = currentChoosen[rowName];
-          if(currentKey){
-            scope.currentFilters.splice( scope.currentFilters.indexOf(currentKey),1 );
-          }
-
-          currentChoosen[rowName] = item.key;
-          scope.currentFilters.push(item.key);
+        scope.clickChild = function(item, row){
+          currentChoosen[row.name] = item.key;
+          scope.currentFilters[row.name] = item.key;
           updateSelected();
         }
       }
@@ -202,7 +190,6 @@
             return a + b;
           },0);
         });
-        console.log(scope.data);
       }
     }
   });

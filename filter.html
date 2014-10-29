@@ -7,11 +7,26 @@
   <link rel="stylesheet" href="funnel.css">
   <link rel="stylesheet" href="filter.css">
   <script src="angular.min.js"></script>
+  <style>
+    .selected-items{
+      width: 870px;
+      border: 1px solid #eaeaea;
+      margin: 0 auto 10px auto;
+    }
+
+    .selected-items .selected{
+      display: inline-block;
+      padding: 15px;
+    }
+  </style>
 </head>
 <body>
 
   <div ng-controller="MyCtrl">
     <!-- <div dpda-funnel data="funnel" style="margin:0 auto;width:300px"></div> -->
+    <div class="selected-items">
+      <div class="selected" ng-repeat="(key,item) in currentFilters">{{key}}:{{item}}</div>
+    </div>
     <div dpda-filter data="filter" current="currentFilters" max="5" item-selected="itemSelected($filters)" style="margin:0 auto;width:870px"></div>
   </div>
   <script src="dpda.js"></script>
@@ -19,14 +34,13 @@
   var app = angular.module('app',['dpda']);
 
   app.controller('MyCtrl',function($scope){
-    $scope.currentFilters = [
-      "all",
-      "seo1",
-      "seo11"
-    ];
+    $scope.currentFilters = {
+      "城市":"all",
+      "站外引流":"seo11"
+    };
 
     $scope.itemSelected = function($filters){
-      console.log($filters);
+      $scope.currentFilters = $filters;
     }
 
     $scope.filter = [{
@@ -41,77 +55,20 @@
         name:"beijing",
         key:"beijing"
       },{
-        name:"beijing",
-        key:"beijing"
+        name:"guangzhou",
+        key:"guangzhou"
       },{
-        name:"beijing",
-        key:"beijing"
+        name:"hangzhou",
+        key:"hangzhou"
       },{
-        name:"beijing",
-        key:"beijing"
+        name:"shenyang",
+        key:"shenyang"
       },{
-        name:"beijing",
-        key:"beijing"
+        name:"chendu",
+        key:"chendu"
       },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
-      },{
-        name:"beijing",
-        key:"beijing"
+        name:"haerbing",
+        key:"haerbing"
       }]
     },{
       name:"站外引流",
