@@ -20,31 +20,52 @@
       restrict: 'A',
       scope: {
         data: "=",
+        max:"@",
         currentFilters: "=current",
         itemSelected: "&"
       },
       template: '<div class="header-filter">'
-        +'<div class="row" ng-repeat="row in data">'
-        +'          <div class="label">{{row.name}}：</div>'
-        +'          <div class="items" ng-repeat="item in row.children">'
-        +'            <div ng-class="getItemClass(item,row.name)" ng-click="clickItem(item,row.name)" data-key="{{item.key}}">{{item.name}}</div>'
-        +'          </div>'
-        +'          <div class="children-container">'
-        +'            <div ng-class="getChildrenClass(item, row.name)"  ng-repeat="item in row.children">'
-        +'              <div ng-class="getChildItemClass(child, row.name)" ng-click="clickChild(child, row.name)" ng-repeat="child in item.children">{{child.name}}</div>'
-        +'            </div>'
-        +'          </div>'
-        +'        </div>'
-        +'        </div>',
+      +'<div class="row" ng-repeat="row in data">'
+      +'  <div class="label">{{row.name}}：</div>'
+      +'  <div class="items-container">'
+      +'    <div class="items" ng-show="$index < max || row.showMore" ng-repeat="item in row.children">'
+      +'      <div ng-class="getItemClass(item,row.name)" ng-click="clickItem(item,row.name)" data-key="{{item.key}}">{{item.name}}</div>'
+      +'    </div>'
+      +'    <div class="more" ng-show="row.children.length > max && !row.showMore" ng-click="row.showMore=true">更多</div>'
+      +'    <div class="children-container">'
+      +'      <div ng-class="getChildrenClass(item, row.name)" ng-repeat="item in row.children">'
+      +'        <div ng-repeat="child in item.children">'
+      +'          <div ng-switch="!!(child.children && child.children.length)">'
+      +'            <div ng-switch-when="true" class="third-item-container">'
+      +'              <div class="title">{{child.name}}：</div>'
+      +'              <div ng-class="getThirdItem(thirdItem, row.name)" ng-repeat="thirdItem in child.children" ng-click="clickChild(thirdItem, row.name)">{{thirdItem.name}}</div>'
+      +'            </div>'
+      +'            <div ng-class="getChildItemClass(child, row.name)" ng-switch-when="false" ng-click="clickChild(child, row.name)">'
+      +'              {{child.name}}'
+      +'            </div>'
+      +'          </div>'
+      +'        </div>'
+      +'      </div>'
+      +'    </div>'
+      +'  </div>'
+      +'</div>'
+      +'</div>',
       link: function(scope, element, attr){
-
         var currentChoosen = {};
         var currentOpen = {};
 
         function shouldOpen(item, rowName, type){
           var result = false;
+            
+
           if(item.children){
-            result = item.open;
+            result = item.children.some(function(c){
+              if(item.initialized){
+                return item.open
+              }else{
+                return item.open || shouldOpen(c, rowName);
+              }
+            }, 'item');
           }else{
             if(scope.currentFilters.indexOf(item.key) > -1){
               result = true;
@@ -62,6 +83,11 @@
 
           }
 
+          if(item.name == "SEO"){
+            console.log(item,rowName);
+            console.log("result", result);
+          }
+
           return result;
         }
 
@@ -69,12 +95,19 @@
           scope.itemSelected({$filters:currentChoosen});
         }
 
+        scope.getThirdItem = function(item,rowName){
+          var classes = ["third-item"];
+          if(shouldOpen(item, rowName)){
+            classes.push("active");
+          }
+          return classes;
+        }
+
         scope.getChildrenClass = function(item, rowName){
           var classes = ["children"];
           if(shouldOpen(item, rowName) && item.children && item.children.length){
             classes.push("active");
           }
-
 
           // 初始化过之后不走该逻辑
           if(!item.initialized){
@@ -103,6 +136,11 @@
           if(shouldOpen(item, rowName, 'child')){
             classes.push("active");
           }
+          
+          if(item.children && item.children.length){
+            classes.push("has-third-item");
+          }
+
           return classes;
         }
 

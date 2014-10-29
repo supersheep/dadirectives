@@ -4,6 +4,10 @@
 	padding: 15px 20px 20px 20px;
 }
 
+.header-filter .row{
+	position: relative;
+}
+
 .header-filter .row:after{
 	clear: both;
 	display: block;
@@ -11,7 +15,10 @@
 }
 
 .header-filter .row .label{
-	float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+	left: 10px;
 	font-size: 14px;
 	width: 100px;
 	text-align: right;
@@ -19,13 +26,25 @@
 	line-height: 30px;
 }
 
+.header-filter .row .items-container{
+	padding-left: 120px;
+}
+
 .header-filter .row .items{
 	float: left;
 }
 
 
+.header-filter .row .more{
+	float: left;
+	cursor: pointer;
+	margin-left: 10px;
+	line-height: 30px
+}
+
 .header-filter .row .items .name,
-.header-filter .row .child-item{
+.header-filter .row .child-item,
+.header-filter .row .third-item{
 	float: left;
 	font-size: 14px;
 	text-align: center;
@@ -39,18 +58,37 @@
 
 
 .header-filter .row .items .name.active,
-.header-filter .row .child-item.active{
+.header-filter .row .child-item.active,
+.header-filter .row .third-item-container .third-item.active{
 	background-color: #39c;
 	color: #fff;
 }
 
+.header-filter .row .child-item.has-third-item{
+	padding: 0;
+	float: none;
+	background-color: transparent;
+}
+
+.header-filter .row .third-item-container:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.header-filter .row .third-item-container .title{
+	float: left;
+	line-height: 30px;
+	margin-right: 10px;
+}
+
+.header-filter .row .third-item-container .third-item{
+	float: left;
+}
 
 .header-filter .children-container{
 	clear: both;
-	margin-left: 110px;
 }
-
-
 
 .header-filter .row .children-container .children{
 	background-color: #e4e4e4;

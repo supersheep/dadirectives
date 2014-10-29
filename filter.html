@@ -12,7 +12,7 @@
 
   <div ng-controller="MyCtrl">
     <!-- <div dpda-funnel data="funnel" style="margin:0 auto;width:300px"></div> -->
-    <div dpda-filter data="filter" current="currentFilters" item-selected="itemSelected($filters)" style="margin:0 auto;width:870px"></div>
+    <div dpda-filter data="filter" current="currentFilters" max="5" item-selected="itemSelected($filters)" style="margin:0 auto;width:870px"></div>
   </div>
   <script src="dpda.js"></script>
   <script>
@@ -21,7 +21,8 @@
   app.controller('MyCtrl',function($scope){
     $scope.currentFilters = [
       "all",
-      "seo2"
+      "seo1",
+      "seo11"
     ];
 
     $scope.itemSelected = function($filters){
@@ -39,6 +40,78 @@
       },{
         name:"beijing",
         key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
+      },{
+        name:"beijing",
+        key:"beijing"
       }]
     },{
       name:"站外引流",
@@ -46,10 +119,22 @@
         name:"SEO",
         children:[{
           name:"seo1",
-          key:"seo1"
+          children: [{
+            name:"seo11",
+            key:"seo11"
+          },{
+            name:"seo12",
+            key:"seo12"
+          }]
         },{
           name:"seo2",
-          key:"seo2"
+          children: [{
+            name:"seo21",
+            key:"seo21"
+          },{
+            name:"seo22",
+            key:"seo22"
+          }]
         }]
       },{
         name:"SEM",
